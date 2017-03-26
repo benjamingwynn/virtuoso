@@ -21,6 +21,40 @@
 				"methods": {
 					updateScrollState (event) {
 						this.$el.querySelector(".virtuoso-syntax").scrollTop = event.target.scrollTop;
+					},
+
+					surround (insBefore, insAfter) {
+						const
+							textarea = this.$el.querySelector(".virtuoso-text"),
+							str = this.unformattedMarkdown,
+							selStart = textarea.selectionStart,
+							selEnd = textarea.selectionEnd,
+							selected = str.substring(selStart, selEnd),
+							selectedLength = selected.length,
+							selectedTrimmed = selected.trim();
+
+						if (selectedTrimmed.length) {
+							const
+								nSpacesLeft = selectedLength - selected.trimLeft().length,
+								nSpacesRight = selectedLength - selected.trimRight().length,
+								before = str.substring(0, selStart),
+								after = str.substring(selEnd, str.length);
+
+							let spacesLeft,
+								spacesRight;
+
+							spacesLeft = "";
+							while (spacesLeft.length !== nSpacesLeft) {
+								spacesLeft = ` ${spacesLeft}`;
+							}
+
+							spacesRight = "";
+							while (spacesRight.length !== nSpacesRight) {
+								spacesRight = `${spacesRight} `;
+							}
+
+							this.unformattedMarkdown = `${before}${spacesLeft}${insBefore}${selectedTrimmed}${insAfter || insBefore}${spacesRight}${after}`;
+						}
 					}
 				},
 

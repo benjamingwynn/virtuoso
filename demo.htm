@@ -4,7 +4,6 @@
 		<title>virtuoso</title>
 		<style>
 			body, html {
-				height: 100%;
 				width: 100%;
 				padding: 0;
 				margin: 0;
@@ -27,8 +26,39 @@
 			}
 
 			.virtuoso > .virtuoso-ctrls {
-				flex: 1em 0 0;
-				background: silver;
+				display: flex;
+				flex-flow: row nowrap;
+				background: whitesmoke;
+				align-items: center;
+				border-bottom: solid thin #aaa;
+			}
+
+			.virtuoso > .virtuoso-ctrls > button {
+				font-size: 1.5em;
+
+				height: 1em;
+				width: 1em;
+				margin: 0.25em;
+				border-radius: 0.3em;
+				display: flex;
+				border: solid #aaa thin;
+			}
+
+			.virtuoso > .virtuoso-ctrls > button::before {
+				display: flex;
+				font-size: 0.5em;
+				margin: auto;
+				align-self: center;
+			}
+
+			.virtuoso > .virtuoso-ctrls > button.bold::before {
+				content: "B";
+				font-weight: bold;
+			}
+
+			.virtuoso > .virtuoso-ctrls > button.italic::before {
+				content: "I";
+				font-style: italic;
 			}
 
 			.virtuoso > .virtuoso-inner {
@@ -95,6 +125,10 @@
 				color: white;
 			}
 
+			.virtuoso .virtuoso-syntax .token.tag .punctuation {
+				color: inherit;
+			}
+
 			.virtuoso .virtuoso-syntax .token.list.punctuation {
 				color: grey;
 			}
@@ -107,12 +141,17 @@
 				background: #333;
 				color: grey;
 			}
+
+			.virtuoso .virtuoso-syntax .token.punctuation {
+				color: silver;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="virtuoso">
 			<div class="virtuoso-ctrls">
-				<button type="button"></button>
+				<button class="bold "v-on:click="surround('**')" type="button"></button>
+				<button class="italic "v-on:click="surround('*')" type="button"></button>
 			</div>
 
 			<div class="virtuoso-inner">
