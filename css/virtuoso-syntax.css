@@ -1,0 +1,38 @@
+.virtuoso .virtuoso-syntax .token.title {
+	color: green;
+	text-shadow: 1px 0 0 green;
+}
+
+.virtuoso .virtuoso-syntax .token.italic {
+	font-style: italic;
+}
+
+.virtuoso .virtuoso-syntax .token.bold {
+	text-shadow: 1px 0 0 black;
+}
+
+.virtuoso .virtuoso-syntax .token.tag {
+	background: #dcc828;
+	color: white;
+}
+
+.virtuoso .virtuoso-syntax .token.tag .punctuation {
+	color: inherit;
+}
+
+.virtuoso .virtuoso-syntax .token.list.punctuation {
+	color: grey;
+}
+
+.virtuoso .virtuoso-syntax .token.url {
+	border-bottom: 1px blue dashed;
+}
+
+.virtuoso .virtuoso-syntax .token.code {
+	background: #333;
+	color: grey;
+}
+
+.virtuoso .virtuoso-syntax .token.punctuation {
+	color: silver;
+}

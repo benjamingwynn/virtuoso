@@ -3,7 +3,19 @@
 (function () {
 	"use strict";
 
-	const chainloadr = window.chainloadr;
+	const
+		chainloadr = window.chainloadr,
+		template = `<div class="virtuoso">
+						<div class="virtuoso-ctrls">
+							<button class="bold" v-on:click="surround(true, '**')" type="button"></button>
+							<button class="italic" v-on:click="surround(true, '*')" type="button"></button>
+						</div>
+
+						<div class="virtuoso-inner">
+							<div class="virtuoso-syntax" v-html="highlightedSyntax"></div>
+							<textarea class="virtuoso-text" v-on:scroll="updateScrollState" v-model="unformattedMarkdown">{{unformattedMarkdown}}</textarea>
+						</div>
+					</div> `;
 
 	function strReplace (target, replaceThis, withThis) {
 		return target.split(replaceThis).join(withThis);
@@ -13,12 +25,8 @@
 		chainloadr("https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-markdown.js", () => {
 			const Vue = window.Vue;
 
-			window.virtuoso = new Vue({
-				"el": ".virtuoso",
-
-				"data": {
-					"unformattedMarkdown": "# virtuoso\n\nvirtuoso enables use of the browsers built-in autocorrect, while still allowing use of *markdown* **syntax** _highlighting_. Prism.js is used for syntax highlighting and Vue.js is used to tie everything together.\n\nTechnically, it works using a <textarea> element and a standard <div> in tandem, then simply renders the same content in both elements but displays the <textarea> on top with transparent text using some clever CSS.\n\nCreated by [Benjamin Gwynn](http://xenxier.com)\n\nthis is a    **  test **  !"
-				},
+			Vue.component("virtuoso-editor", {
+				template,
 
 				"methods": {
 					updateScrollState (event) {
@@ -104,16 +112,28 @@
 					}
 				},
 
+				data () {
+					return {
+						"unformattedMarkdown": this.$slots.default[0].text
+					}
+				},
+
 				"computed": {
 					highlightedSyntax () {
-						const
-							highlighted = window.Prism.highlight(this.unformattedMarkdown, window.Prism.languages.markdown),
-							properNewLine = strReplace(highlighted, "\n", "<br />");
+						if (this.unformattedMarkdown) {
+							const
+								highlighted = window.Prism.highlight(this.unformattedMarkdown, window.Prism.languages.markdown),
+								properNewLine = strReplace(highlighted, "\n", "<br />");
 
-						return properNewLine;
+							return properNewLine;
+						}
+
+						return "";
 					}
 				}
 			});
+
+			document.querySelectorAll("virtuoso-editor").forEach((element) => new Vue({"el": element}));
 		});
 	});
 }());

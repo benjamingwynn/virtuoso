@@ -5,160 +5,28 @@
 		<style>
 			body, html {
 				width: 100%;
-				padding: 0;
 				margin: 0;
-			}
-
-			.virtuoso {
-				display: flex;
-				flex-flow: column nowrap;
+				padding: 0 3em;
 				box-sizing: border-box;
-				width: 30em;
-				height: 20em;
-				border: solid thin royalblue;
-				margin: 1em auto;
-			}
-
-			.virtuoso * {
-				box-sizing: border-box;
-				margin: 0;
-				padding: 0;
-			}
-
-			.virtuoso > .virtuoso-ctrls {
-				display: flex;
-				flex-flow: row nowrap;
-				background: whitesmoke;
-				align-items: center;
-				border-bottom: solid thin #aaa;
-			}
-
-			.virtuoso > .virtuoso-ctrls > button {
-				font-size: 1.5em;
-
-				height: 1em;
-				width: 1em;
-				margin: 0.25em;
-				border-radius: 0.3em;
-				display: flex;
-				border: solid #aaa thin;
-			}
-
-			.virtuoso > .virtuoso-ctrls > button::before {
-				display: flex;
-				font-size: 0.5em;
-				margin: auto;
-				align-self: center;
-			}
-
-			.virtuoso > .virtuoso-ctrls > button.bold::before {
-				content: "B";
-				font-weight: bold;
-			}
-
-			.virtuoso > .virtuoso-ctrls > button.italic::before {
-				content: "I";
-				font-style: italic;
-			}
-
-			.virtuoso > .virtuoso-inner {
-				display: flex;
-				flex-flow: column nowrap;
-				flex: 100% 0 1;
-			}
-
-			.virtuoso > .virtuoso-inner > * {
-				flex-shrink: 0;
-				height: 100%;
-				width: 100%;
-				font-family: sans-serif;
-				font-size: 1em;
-				padding: 0.8em 0.8em;
-				background: none;
-				overflow-y: scroll;
-				overflow-x: hidden;
-			}
-
-			.virtuoso > .virtuoso-inner > .virtuoso-syntax {
-				display: block;
-				white-space: pre-wrap;
-				word-wrap: break-word;
-			}
-
-			.virtuoso > .virtuoso-inner > .virtuoso-syntax .token {
-				display: inline;
-			}
-
-			.virtuoso > .virtuoso-inner > .virtuoso-text {
-				display: flex;
-				position: relative;
-				top: -100%;
-				border: none;
-				resize: none;
-
-				color: royalblue;
-				-webkit-text-fill-color: transparent;
-			}
-
-			.virtuoso > .virtuoso-inner > .virtuoso-text::-webkit-input-placeholder {
-				color: #ccc;
-				text-shadow: none;
-				-webkit-text-fill-color: initial;
 			}
 		</style>
-		<style>
-			.virtuoso .virtuoso-syntax .token.title {
-				color: green;
-				text-shadow: 1px 0 0 green;
-			}stripInner
-
-			.virtuoso .virtuoso-syntax .token.italic {
-				font-style: italic;
-			}
-
-			.virtuoso .virtuoso-syntax .token.bold {
-				text-shadow: 1px 0 0 black;
-			}
-
-			.virtuoso .virtuoso-syntax .token.tag {
-				background: #dcc828;
-				color: white;
-			}
-
-			.virtuoso .virtuoso-syntax .token.tag .punctuation {
-				color: inherit;
-			}
-
-			.virtuoso .virtuoso-syntax .token.list.punctuation {
-				color: grey;
-			}
-
-			.virtuoso .virtuoso-syntax .token.url {
-				border-bottom: 1px blue dashed;
-			}
-
-			.virtuoso .virtuoso-syntax .token.code {
-				background: #333;
-				color: grey;
-			}
-
-			.virtuoso .virtuoso-syntax .token.punctuation {
-				color: silver;
-			}
-		</style>
+		<link rel="stylesheet" href="./css/virtuoso-main.css" />
+		<link rel="stylesheet" href="./css/virtuoso-syntax.css" />
 	</head>
 	<body>
-		<div class="virtuoso">
-			<div class="virtuoso-ctrls">
-				<button class="bold" v-on:click="surround(true, '**')" type="button"></button>
-				<button class="italic" v-on:click="surround(true, '*')" type="button"></button>
-			</div>
+		<virtuoso-editor id="test"># virtuoso
 
-			<div class="virtuoso-inner">
-				<div class="virtuoso-syntax" v-html="highlightedSyntax"></div>
-				<textarea class="virtuoso-text" v-on:scroll="updateScrollState" v-model="unformattedMarkdown">{{unformattedMarkdown}}</textarea>
-			</div>
-		</div>
+virtuoso enables use of the browsers built-in autocorrect, while still allowing use of *markdown* **syntax** _highlighting_. Prism.js is used for syntax highlighting and Vue.js is used to tie everything together.
+
+Technically, it works using a &lt;textarea&gt; element and a standard &lt;div&gt; in tandem, then simply renders the same content in both elements but displays the &lt;textarea&gt; on top with transparent text using some clever CSS.
+
+Created by [Benjamin Gwynn](http://xenxier.com)</virtuoso-editor>
+
+		<virtuoso-editor># Limitations of Virtuoso:
+
+* You must specify the height of the Virtuoso element
+* Incompatible with Firefox, more testing required
+* Compatible with new versions of Google Chrome, support for older Chrome versions is planned by replacing NodeList.forEach calls</virtuoso-editor>
 
 		<script async data-chainloadr="./virtuoso.js" src="https://rawgit.com/benjamingwynn/chainloadr-js/master/chainloadr.js"></script>
 	</body>
