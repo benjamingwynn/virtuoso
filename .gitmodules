@@ -1,0 +1,6 @@
+[submodule "lib/chainloadr-js"]
+	path = lib/chainloadr-js
+	url = https://github.com/benjamingwynn/chainloadr-js.git
+[submodule "eslint"]
+	path = eslint
+	url = https://github.com/benjamingwynn/eslint-config-gwynn.git
