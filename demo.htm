@@ -110,7 +110,7 @@
 			.virtuoso .virtuoso-syntax .token.title {
 				color: green;
 				text-shadow: 1px 0 0 green;
-			}
+			}stripInner
 
 			.virtuoso .virtuoso-syntax .token.italic {
 				font-style: italic;
@@ -150,8 +150,8 @@
 	<body>
 		<div class="virtuoso">
 			<div class="virtuoso-ctrls">
-				<button class="bold "v-on:click="surround('**')" type="button"></button>
-				<button class="italic "v-on:click="surround('*')" type="button"></button>
+				<button class="bold" v-on:click="surround(true, '**')" type="button"></button>
+				<button class="italic" v-on:click="surround(true, '*')" type="button"></button>
 			</div>
 
 			<div class="virtuoso-inner">
