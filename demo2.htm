@@ -23,23 +23,15 @@
 		<script async data-chainloadr src="https://rawgit.com/benjamingwynn/chainloadr-js/master/chainloadr.js">
 			const hash = location.hash.replace("#", "");
 
-			function loadVirtuso() {
+			chainloadr("lz-string", () => {
+				document.body.innerHTML = `<virtuoso-editor id="editor">${LZString.decompressFromEncodedURIComponent(hash)}</virtuoso-editor>`;
+
 				chainloadr("./virtuoso.js", () => {
 					setInterval(() => {
 						location.hash = LZString.compressToEncodedURIComponent(document.querySelector(".virtuoso-text").innerHTML);
 					}, 1000);
 				});
-			}
-
-			if (hash.length) {
-				chainloadr("lz-string", () => {
-					document.body.innerHTML = `<virtuoso-editor id="editor">${LZString.decompressFromEncodedURIComponent(hash)}</virtuoso-editor>`;
-					loadVirtuso();
-				});
-			} else {
-				document.body.innerHTML = `<virtuoso-editor id="editor"># Hello World\n\nWelcome to virtuso.</virtuoso-editor>`;
-				loadVirtuso();
-			}
+			});
 		</script>
 	</body>
 </html>
