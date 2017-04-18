@@ -7,11 +7,19 @@
 		chainloadr = window.chainloadr,
 		template = `<div class="virtuoso">
 						<div class="virtuoso-ctrls">
-							<button class="bold" v-on:click="surround(true, '**')" type="button"></button>
-							<button class="italic" v-on:click="surround(true, '*')" type="button"></button>
+							<div class="virtuoso-formatting-ctrls">
+								<button class="bold" v-on:click="surround(true, '**')" type="button"></button>
+								<button class="italic" v-on:click="surround(true, '*')" type="button"></button>
+							</div>
+
+							<div class="virtuoso-zoom-ctrls">
+								<button class="zoom-out" v-on:click="zoomIn(-0.1)" type="button"></button>
+								<div class="zoom-val">{{zoom}}</div>
+								<button class="zoom-in" v-on:click="zoomIn(0.1)" type="button"></button>
+							</div>
 						</div>
 
-						<div class="virtuoso-inner">
+						<div class="virtuoso-inner" v-bind:style="{fontSize: zoom + 'em' }">
 							<div class="virtuoso-syntax" v-html="highlightedSyntax"></div>
 							<textarea class="virtuoso-text" v-on:scroll="updateScrollState" v-model="unformattedMarkdown">{{unformattedMarkdown}}</textarea>
 						</div>
@@ -31,6 +39,12 @@
 				"methods": {
 					updateScrollState (event) {
 						this.$el.querySelector(".virtuoso-syntax").scrollTop = event.target.scrollTop;
+					},
+
+					zoomIn (zoomage) {
+						const asFloat = Math.min(2, Math.max(0.1, parseFloat(this.zoom) + zoomage));
+
+						this.zoom = asFloat.toFixed(1);
 					},
 
 					surround (stripInner, insBefore, optInsAfter) {
@@ -114,7 +128,8 @@
 
 				data () {
 					return {
-						"unformattedMarkdown": this.$slots.default[0].text
+						"unformattedMarkdown": this.$slots.default[0].text,
+						"zoom": "1.0"
 					}
 				},
 
